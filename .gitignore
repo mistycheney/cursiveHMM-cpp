@@ -11,3 +11,8 @@
 *.lai
 *.la
 *.a
+
+random_words
+hmm_params
+user_data
+predictions

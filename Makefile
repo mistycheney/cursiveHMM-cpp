@@ -1,13 +1,13 @@
-program_NAME := tracker
+program_NAME := cursiveHMM
 program_C_SRCS := $(wildcard *.c)
 program_CXX_SRCS := $(wildcard *.cpp)
+program_CXX_HDRS := $(wildcard *.hpp)
 program_C_OBJS := ${program_C_SRCS:.c=.o}
 program_CXX_OBJS := ${program_CXX_SRCS:.cpp=.o}
 program_OBJS := $(program_C_OBJS) $(program_CXX_OBJS)
-program_INCLUDE_DIRS := /opt/intel/ipp/include /home/yuncong/opencv/release/include
+program_INCLUDE_DIRS := /opt/intel/ipp/include /home/yuncong/opencv/release/include /usr/include/libxml2 
 program_LIBRARY_DIRS := /opt/intel/ipp/lib/intel64 /home/yuncong/opencv/release/lib
-program_LIBRARIES := opencv_core opencv_highgui opencv_objdetect opencv_imgproc ippi ippcv gd png z jpeg freetype m pthread boost_system boost_filesystem
-#CPPFLAGS += -DDTIME -g -ffast-math -mfpmath=387 -march=core2
+program_LIBRARIES := mlpack armadillo opencv_core opencv_highgui opencv_objdetect opencv_imgproc ippi ippcv gd png z jpeg freetype m pthread boost_system boost_filesystem
 CPPFLAGS += -g -O2 -fopenmp -ffast-math -mfpmath=387 -march=core2
 
 CPPFLAGS += $(foreach includedir,$(program_INCLUDE_DIRS),-I$(includedir))
@@ -19,7 +19,7 @@ LDFLAGS += -Wl,-rpath /opt/intel/ipp/lib/intel64
 
 all: $(program_NAME)
 
-$(program_NAME): $(program_OBJS)
+$(program_NAME): $(program_OBJS) $(program_CXX_SRCS) $(program_CXX_HDRS)
 	$(CXX) $(CPPFLAGS) $(program_OBJS) $(LDFLAGS) -o $(program_NAME)
 
 clean:
